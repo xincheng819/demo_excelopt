@@ -1,0 +1,83 @@
+##debug: true
+
+server:
+  port: 8080
+  tomcat:
+    uri-encoding: utf-8
+    basedir: /Users/naver/irteam/
+
+
+spring:
+  mvc:
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
+
+
+    static-path-pattern: /static/**
+
+ #开发环境下配置
+#  datasource:
+#    driver-class-name: com.mysql.jdbc.Driver
+#    url: jdbc:mysql://10.34.170.163:3306/linuxprobe?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
+#    username: root
+#    password: root
+
+  datasource:
+    druid:
+      url: jdbc:mysql://10.34.170.32:3306/linuxprobe?useUnicode=true&characterEncoding=utf-8&useSSL=true
+      username: root
+      password: root
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      # 连接池配置
+      initial-size: 1
+      max-active: 20
+      min-idle: 1
+      max-wait: 10000
+      pool-prepared-statements: true
+      max-open-prepared-statements: 20
+      validation-query-timeout: 5000
+      test-on-borrow: false
+      test-on-return: false
+      test-while-idle: true
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 30000
+      max-evictable-idle-time-millis: 60000
+      removeAbandoned: true
+      removeAbandonedTimeout: 1800
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      max-pool-prepared-statement-per-connection-size: 20
+      filters: stat,wall #filters: #配置多个英文逗号分隔(统计，sql注入，log4j过滤)
+    type: com.alibaba.druid.pool.DruidDataSource
+
+  # Redis配置
+  redis:
+    ## Redis数据库索引（默认为0）
+    database: 0
+    ## Redis服务器地址
+    host: 10.34.170.32
+    ## Redis服务器连接端口
+    port: 6379
+    ## Redis服务器连接密码（默认为空）
+    password: redis123
+
+    jedis:
+      pool:
+        ## 连接池最大连接数（使用负值表示没有限制）
+        max-active: 8
+        ## 连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: -1
+        ## 连接池中的最大空闲连接
+        max-idle: 8
+        ## 连接池中的最小空闲连接
+        min-idle: 0
+        ## 连接超时时间（毫秒）
+        timeout: 10000
+# mybatis 配置
+mybatis:
+  config-location: classpath:mybatis-config.xml
+#  mapper-locations: classpath:sqlmap/*.xml
+##打印执行的sql语句
+logging:
+  level:
+    com.nhnchina.demoexcelopt.dao: debug
